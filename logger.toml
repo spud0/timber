@@ -1,0 +1,30 @@
+# This is an example of how the toml file should be set up. 
+
+# Specify the destination as file, stdout, or network (maybe to db or socket??)
+[logger]
+destination = "file"
+
+# Put the escape code for the color you want the levels to appear as
+[logger.colors]
+debug = "\u001b[47m" # white
+info  = "\u001b[44m" # blue
+warn  = "\u001b[43m" # yellow 
+error = "\u001b[41m" # red
+
+# The path to the file
+[logger.file]
+path = "path/to/logging/file"
+
+# If I can log to stdout
+[logger.stdout]
+enabled = false
+
+# The format of the log, specifies the order
+[logger.format]
+format = "{timestamp} {level} {message}"
+
+# If the logs should be buffered, and numb of message b/f buffer is written
+[logger.buffer]
+enabled = true
+buffer_size = 40
+
