@@ -2,44 +2,51 @@
 #include <chrono>
 #include <string>
 #include <mutex>
+#include <source_location>
 
 // For TOML parsing
 #include "./ext/toml.hh"
 
-
 namespace timber {
 	
 	// The config for the logger
-	class config {};
+	class config {
+	  public:
+		std::string file_path;
+		std::stringstream sstr; 
+	  private:
+		toml::table config_table;	
+	};
 
 
 	// The level of the logger 
-	enum class Level {
-		WARN = 0,
+	enum class level {
+		WARN,
 		DEBUG,
 		INFO,
 		FATAL,
 	};
 
 
-	class log {	
-	  public:
-		std::string to_string (const log& logger) const;
-		log (const config& conf);
-		~log();
-	
-	  private:
-		std::mutex _mut;	
-		Level current_level;	
-			
-	};
-
-
 	// Where to write the logs
-	enum class Loc {
-		STDOUT = 0,
+	enum class loc {
+		STDOUT,
 		NET,
 		DISK,
 	};
+
+	class log {	
+	  public:
+		[[nodiscard]] constexpr std::string to_string (const log& logger) const noexcept;
+		[[nodiscard]] std::string log_message (std::string_view message, std::source_location loc) const;
+		
+		log (const config& conf);
+		~log() = default;
+	
+	  private:
+		std::mutex _mtx;	
+		level current_level;			
+	};
+
 
  }
