@@ -20,15 +20,13 @@ namespace timber {
 	// The config for the logger
 	class config {
 	  public:
-		static std::expected<config, std::system_error> read_from_toml(const std::filesystem::path& file_path) noexcept;
 
-		[[nodiscard("Must capture TOML table to configure logger.")]] const toml::table& get_config_table(void) const noexcept;
-
-		[[nodiscard]] const std::string_view get_color (level lvl) const noexcept; 
-
-		[[nodiscard]] const config build_from_table(const toml::table& table) const noexcept;
+		[[nodiscard("Must capture TOML table to configure config.")]] const toml::table& get_config_table(void) const noexcept;
+		[[nodiscard("Must capture config to configure logger.")]] const config build_from_table(const toml::table& table) const noexcept;
 		
-		
+		// [[nodiscard]] const std::string_view get_color (level lvl) const noexcept; 
+		// static std::expected<config, std::system_error> read_from_toml(const std::filesystem::path& file_path) noexcept;
+
 	  private:
 
 		std::filesystem::path file_path;
@@ -48,7 +46,7 @@ namespace timber {
 
 		size_t buffer_size = 15;
 			
-		[[noreturn]] void parse_toml_table() const noexcept; 
+		// [[noreturn]] void parse_toml_table() const noexcept; 
 			
 	};
 
@@ -60,7 +58,7 @@ namespace timber {
 										std::string_view message, 
 										const std::source_location loc = std::source_location::current()) const;
 		
-		log (const config& conf);
+		log (const config& configuration) : conf(configuration), current_level(timber::level::INFO) {};
 		~log() = default;
 	
 	  private:
