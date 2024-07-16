@@ -27,6 +27,10 @@ namespace timber {
 		// [[nodiscard]] const std::string_view get_color (level lvl) const noexcept; 
 		// static std::expected<config, std::system_error> read_from_toml(const std::filesystem::path& file_path) noexcept;
 
+		size_t get_buff_size () { return buffer_size; }
+		void set_fp (std::string fp) { file_path = fp; return;}
+		void set_rot_size (size_t size) { rotation_size = size; return;}
+
 	  private:
 
 		std::filesystem::path file_path;
@@ -41,10 +45,12 @@ namespace timber {
 
 		// Some reasonable default settings
 		std::string_view destn = "stdout";		
+		std::string_view format_string = "";		
 		bool defaults_enabled = false;
 		bool buffer_enabled = false; 
 
 		size_t buffer_size = 15;
+		size_t rotation_size = 10485760;
 			
 		// [[noreturn]] void parse_toml_table() const noexcept; 
 			
@@ -58,13 +64,16 @@ namespace timber {
 										std::string_view message, 
 										const std::source_location loc = std::source_location::current()) const;
 		
-		log (const config& configuration) : conf(configuration), current_level(timber::level::INFO) {};
+		log (const config& configuration) : conf(configuration), 
+											current_level(timber::level::INFO),
+											_message_buffer (std::vector<std::string_view>(conf.get_buff_size())){};
 		~log() = default;
 	
 	  private:
 		std::mutex _mtx;	
 		level current_level;			
 		config conf;
+		std::vector<std::string_view> _message_buffer;
 	};
 
  }
