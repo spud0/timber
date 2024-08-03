@@ -17,6 +17,10 @@ function is made, it locks the mutex, after it unlocks it.
 
 Not sure if there could be a deadlock though ...
 
+
+## How it looks ##
+![png of logger output in terminal](assets/logger.png)
+
 ## Links ##
 - [gcc macro stuff](https://gcc.gnu.org/onlinedocs/cpp/Standard-Predefined-Macros.html)
 - [api design in C++](https://youtube.com/watch?v=zL-vn_pGGgY) 
