@@ -1,28 +1,28 @@
 # Timber #
-A logging utility for C++ programs. 
+A thread safe logging utility for C++ programs. 
 
 ## Why? ##
 I wanted to learn how to implement a logger. There are a few ways to go 
 about handling how the logger actually writes to disk, and how to configure
-the logger itself which makes this interesting.
+the logger itself which makes this interesting. It should be useful for debugging
+other C++ programs to. This will also use 
 
-- This depends on a toml parsing library 
-[toml.hpp](https://github.com/marzer/tomlplusplus/)
-
-- This will also use 
-```cpp 
-std::source_location
-std::expected
+```cpp std::source_location
 ```
-which gives me useful metadata about function's and line numbers of various
-statements and a convenient way to wrap return values.
+for ease of use. It provides useful metadata about function's and line numbers of various
+statements.
 
 ## How it works ##
-Currently just specify a toml file and it will get parsed, which will set 
-the configuration of the logger.
+The thread safety comes from the, 
+```cpp std::lock_guard 
+```
+which uses RAII or Scope Based Resource Management to automatically manage the mutex. Whenever a call to the log 
+function is made, it locks the mutex, after it unlocks it. 
+
+Not sure if there could be a deadlock though ...
 
 ## Links ##
-- [gcc stuff](https://gcc.gnu.org/onlinedocs/gcc/index.html)
+- [gcc macro stuff](https://gcc.gnu.org/onlinedocs/cpp/Standard-Predefined-Macros.html)
 - [api design in C++](https://youtube.com/watch?v=zL-vn_pGGgY) 
-- 
+- [raii or sbrm]()
 
