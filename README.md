@@ -24,5 +24,5 @@ Not sure if there could be a deadlock though ...
 ## Links ##
 - [gcc macro stuff](https://gcc.gnu.org/onlinedocs/cpp/Standard-Predefined-Macros.html)
 - [api design in C++](https://youtube.com/watch?v=zL-vn_pGGgY) 
-- [raii or sbrm]()
+- [raii or sbrm](https://en.cppreference.com/w/cpp/language/raii)
 
